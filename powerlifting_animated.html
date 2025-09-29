@@ -5,10 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Powerlifting App</title>
 <style>
-  table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
-  th, td { border: 1px solid #000; padding: 5px; text-align: center; }
-  input { width: 80px; text-transform: uppercase; }
-  button { margin-bottom: 10px; }
+  body { font-family: Arial, sans-serif; margin: 10px; }
+  table { border-collapse: collapse; margin-bottom: 20px; width: 100%; }
+  th, td { border: 1px solid #000; padding: 5px; text-align: center; white-space: nowrap; }
+  input { width: 80px; font-size: 1em; padding: 5px; text-transform: uppercase; }
+  button { font-size: 1em; padding: 5px 10px; margin-bottom: 10px; }
+
+  /* Tabelle scrollabili su mobile */
+  .table-container { overflow-x: auto; }
+
   .migliore { background-color: #c8e6c9; }
   .peggiore { background-color: #ffcdd2; }
 </style>
@@ -18,46 +23,48 @@
 <h1>Powerlifting App</h1>
 <div id="inizio">Premi <button onclick="aggiungiAtleta()">+ Aggiungi Atleta</button> per aggiungere un atleta</div>
 
-<table id="powerliftingTable">
-  <thead>
-    <tr>
-      <th>Nome</th>
-      <th>Peso</th>
-      <th>Squat1</th>
-      <th>Squat2</th>
-      <th>Squat3</th>
-      <th>Best Squat</th>
-      <th>Panca1</th>
-      <th>Panca2</th>
-      <th>Panca3</th>
-      <th>Best Panca</th>
-      <th>Stacco1</th>
-      <th>Stacco2</th>
-      <th>Stacco3</th>
-      <th>Best Stacco</th>
-      <th>Totale</th>
-      <th>Delta Max</th>
-      <th>Delta Min</th>
-      <th>Entrata per superare</th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
+<div class="table-container">
+  <table id="powerliftingTable">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Peso</th>
+        <th>Squat1</th>
+        <th>Squat2</th>
+        <th>Squat3</th>
+        <th>Best Squat</th>
+        <th>Panca1</th>
+        <th>Panca2</th>
+        <th>Panca3</th>
+        <th>Best Panca</th>
+        <th>Stacco1</th>
+        <th>Stacco2</th>
+        <th>Stacco3</th>
+        <th>Best Stacco</th>
+        <th>Totale</th>
+        <th>Delta Max</th>
+        <th>Delta Min</th>
+        <th>Entrata per superare</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
 
 <h2>Classifica</h2>
-<table id="classificaTable">
-  <thead>
-    <tr>
-      <th>Posizione</th>
-      <th>Nome</th>
-      <th>Peso</th>
-      <th>Totale</th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
+<div class="table-container">
+  <table id="classificaTable">
+    <thead>
+      <tr>
+        <th>Posizione</th>
+        <th>Nome</th>
+        <th>Peso</th>
+        <th>Totale</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
 
 <h2>Legenda</h2>
 <table>
@@ -164,7 +171,7 @@ function calcolaTotali() {
         const classificaBody = document.querySelector('#classificaTable tbody');
         classificaBody.innerHTML = '';
         totaliAtleti
-            .slice() // copia per ordinare senza modificare la tabella principale
+            .slice()
             .sort((a,b) => b.totale - a.totale || a.peso - b.peso)
             .forEach((a, i) => {
                 const tr = document.createElement('tr');
